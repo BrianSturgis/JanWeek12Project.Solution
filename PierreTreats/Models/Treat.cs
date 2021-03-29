@@ -18,7 +18,7 @@ namespace PierreTreats.Models
 
     public virtual ApplicationUser User { get; set; }
 
-    public virtual ICollection<RecipeTag> JoinEntities { get;}
+    public virtual ICollection<FlavorTreat> JoinEntities { get;}
 
   }
 
