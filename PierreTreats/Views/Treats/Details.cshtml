@@ -3,6 +3,7 @@
 @model PierreTreats.Models.Treat
 
 <h2>Treat Details</h2>
+<h2>@Html.ActionLink("Treat:", "Index")<br/>@Model.TreatName</h2>
 <hr />
 <h3>@Html.DisplayNameFor(model => model.TreatName)</h3> 
 

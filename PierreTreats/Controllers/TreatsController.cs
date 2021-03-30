@@ -33,7 +33,7 @@ namespace PierreTreats.Controllers
 
     public ActionResult Create()
     {
-      ViewBag.TreatId = new SelectList(_db.Treats, "TreatId", "TreatDescription");
+      ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "FlavorDescription");
       return View();
     }
 
@@ -44,7 +44,7 @@ namespace PierreTreats.Controllers
       var currentUser = await _userManager.FindByIdAsync(userId);
       treat.User = currentUser;
       _db.Treats.Add(treat);
-      
+      _db.SaveChanges();
       if (FlavorId != 0)
       {
         _db.FlavorTreat.Add(new FlavorTreat() { FlavorId = FlavorId, TreatId = treat.TreatId });
@@ -79,6 +79,22 @@ namespace PierreTreats.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    public ActionResult Edit(int id)
+    {
+      var thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      return View(thisTreat);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Treat treat, int FlavorId)
+    {
+      _db.Entry(treat).State = EntityState.Modified;
+      _db.SaveChanges();
+      return RedirectToAction("Details", new { id = treat.TreatId});
+    }
+
+
 
     public ActionResult Delete(int id)
     {

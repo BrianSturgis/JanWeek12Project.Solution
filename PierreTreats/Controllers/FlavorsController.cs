@@ -45,6 +45,7 @@ namespace PierreTreats.Controllers
       var currentUser = await _userManager.FindByIdAsync(userId);
       flavor.User = currentUser;
       _db.Flavors.Add(flavor);
+      _db.SaveChanges();
       if (TreatId != 0)
       {
           _db.FlavorTreat.Add(new FlavorTreat() { TreatId = TreatId, FlavorId = flavor.FlavorId });
