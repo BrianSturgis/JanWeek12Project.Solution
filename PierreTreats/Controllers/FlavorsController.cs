@@ -88,8 +88,12 @@ namespace PierreTreats.Controllers
     public ActionResult AddTreat(Flavor flavor, int TreatId)
     {
       if (TreatId != 0)
-      {
-      _db.FlavorTreat.Add(new FlavorTreat() { TreatId = TreatId, FlavorId = flavor.FlavorId });
+      {var returnedJoin = _db.FlavorTreat
+          .Any(join => join.FlavorId == flavor.FlavorId && join.TreatId == TreatId);
+          if(!returnedJoin)
+          {
+        _db.FlavorTreat.Add(new FlavorTreat() { TreatId = TreatId, FlavorId = flavor.FlavorId });
+        }
       }
       _db.SaveChanges();
       return RedirectToAction("Index");
